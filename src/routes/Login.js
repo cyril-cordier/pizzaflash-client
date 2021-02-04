@@ -9,7 +9,8 @@ const Login = () => {
     const {message, setMessage, setToken, setUser} = useContext(PizzasContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [setError] = useState("");
+    // eslint-disable-next-line
+    const [error, setError] = useState("");
     //const [errorDetails, setErrorDetails] = useState("");
     const [errCode, setErrCode] = useState("");
     
@@ -40,6 +41,7 @@ const Login = () => {
             console.log(JSON.stringify(err.message.substr(-3)))
             setErrCode(err.message.substr(-3))
             console.log("code", errCode)
+            console.log(err)
             
         }
     }
@@ -48,7 +50,7 @@ const Login = () => {
         <div>
             <h1>Login</h1>
             {message ? <div className="alert alert-success">{message}</div> : null}
-            <div className="mb-2">
+            <form className="mb-2" action="submit">
                 <div className="form-row">
                     <div className="form-group col-8">
                         <label htmlFor="email">Email</label>
@@ -71,7 +73,7 @@ const Login = () => {
                 onClick={handleSubmitLogin}
                 className="btn btn-primary">Submit</button>
 
-            </div>
+            </form>
             <Link to='/register'><button className="btn btn-primary">Go to Register</button></Link>
             <Link to='/'><button className="btn btn-primary">Home</button></Link>
         </div>

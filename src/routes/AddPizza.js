@@ -4,11 +4,11 @@ import PizzaFinder from '../apis/PizzaFinder'
 import { useHistory } from 'react-router-dom'
 
 export default function AddPizza() {
-    const {addPizzas, token} = useContext(PizzasContext);
-    const [name, setName] = useState("Calzone");
-    const [ingredients, setIngredients] = useState([]);
-    const [price, setPrice] = useState("10");
-    const [base, setBase] = useState("Tomate");
+    const {addPizzas, token, ingredients} = useContext(PizzasContext);
+    const [name, setName] = useState("");
+    const [pizzaIngredients, setPizzaIngredients] = useState([]);
+    const [price, setPrice] = useState("");
+    const [base, setBase] = useState("Sauce tomate");
     const [special, setSpecial] = useState(false);
     const [status, setStatus] = useState("disponible");
     
@@ -23,7 +23,7 @@ export default function AddPizza() {
         try {
             const response = await PizzaFinder.post("/pizzas", {
                 name, 
-                ingredients : ingredients[0] ? ingredients[0].substr(0,1).toUpperCase() + ingredients.join(', ').substr(1) : "",
+                ingredients : pizzaIngredients[0] ? pizzaIngredients[0].substr(0,1).toUpperCase() + pizzaIngredients.join(', ').substr(1) : "",
                 price,
                 special,
                 base, 
@@ -31,7 +31,7 @@ export default function AddPizza() {
             }, {headers : {
                 Authorization: `Bearer ${token}`
             }});
-            console.log(response.data.createdPizza)
+            //console.log(response.data.createdPizza)
             addPizzas(response.data.createdPizza);
             history.push('/')
         } catch (err) {
@@ -40,12 +40,12 @@ export default function AddPizza() {
 
     }
 
-    const handleTest = (value) => {
-        const checked = ingredients.includes(value);
+    const handleSelectIngredient = (value) => {
+        const checked = pizzaIngredients.includes(value);
         //console.log(checked)
-        checked ? setIngredients(ingredients.filter((data) => data !== value)) : setIngredients([...ingredients, value])
+        checked ? setPizzaIngredients(pizzaIngredients.filter((data) => data !== value)) : setPizzaIngredients([...pizzaIngredients, value])
         
-        console.log(ingredients[0] ? ingredients[0].substr(0,1).toUpperCase() + ingredients.join(', ').substr(1) : "")
+        //console.log(pizzaIngredients[0] ? pizzaIngredients[0].substr(0,1).toUpperCase() + pizzaIngredients.join(', ').substr(1) : "")
     }
 
     return (
@@ -60,70 +60,60 @@ export default function AddPizza() {
             <form className="mb-4" action="">
                 <div className="row form-row">
                     <div className="col">
-                        <input type="text" value={name} onChange={e => setName(e.target.value)} className="form-control" placeholder="name"/>
+                        <input type="text" value={name} onChange={e => setName(e.target.value)} className="form-control" placeholder="Nom"/>
                     </div>
-                    <div className="col">
-                        <input type="text" value={ingredients[0] ? ingredients[0].substr(0,1).toUpperCase() + ingredients.join(', ').substr(1) : ""} onChange={e => setIngredients(e.target.value)} className="form-control" placeholder="Ingrédients"/>
-                    </div>
-                </div>
-                <div className="row form-row">
                     <div className="col">
                         <input type="text" value={price} onChange={e => setPrice(e.target.value)} className="form-control" placeholder="Prix"/>
                     </div>
+                    
+                </div>
+                <div className="row form-row">
                     <div className="col">
-                        <input type="text" value={base} onChange={e => setBase(e.target.value)} className="form-control" placeholder="Base"/>
+                      <select className=" form-control" value={base} onChange={e => setBase(e.target.value)} >
+                        <option>Sauce tomate</option>
+                        <option>Crème fraîche</option>
+                      </select>
+                    </div>
+                    <div className="col">
+                        <select className=" form-control" value={special} onChange={e => setSpecial(e.target.value)} >
+                          <option value="false">Ordinaire</option>
+                          <option value="true">Spéciale</option>
+                      </select>
                     </div>
                 </div>
                 <div className="row form-row">
                     <div className="col">
-                        <input type="text" value={special} onChange={e => setSpecial(e.target.value)} className="form-control" placeholder="Spéciale ?"/>
+                        <select className=" form-control" value={status} onChange={e => setStatus(e.target.value)} >
+                          <option value="true">Disponible</option>
+                          <option value="false">Non disponible</option>
+                      </select>
                     </div>
-                    <div className="col">
-                        <input type="text" value={status} onChange={e => setStatus(e.target.value)} className="form-control" placeholder="Disponible"/>
+                </div>
+                <div className="row from-row">
+                <div className="col">
+                        <p className="mt-3">Ingrédients :</p>
+                        <p>{pizzaIngredients[0] ? pizzaIngredients[0].substr(0,1).toUpperCase() + pizzaIngredients.join(', ').substr(1) : ""} </p>
                     </div>
                 </div>
                 <div className="form-group">
-    <label htmlFor="exampleFormControlSelect1">Example select</label>
-    <select className="form-control" id="exampleFormControlSelect1">
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-    </select>
+    
   </div>
-  <div className="form-check form-check-inline">
-  <input className="form-check-input" type="checkbox" id="tomate" value="tomate" onClick={(e) => handleTest(e.target.value)}/>
-  <label className="form-check-label" htmlFor="tomate">Tomate</label>
-</div>
-<div className="form-check form-check-inline">
-  <input className="form-check-input" type="checkbox"  id="creme" value="crème" onClick={(e) => handleTest(e.target.value)}/>
-  <label className="form-check-label" htmlFor="creme">Crème</label>
-</div>
-<div className="form-check form-check-inline">
-  <input className="form-check-input" type="checkbox" id="jambon" value="jambon"  onClick={(e) => handleTest(e.target.value)}/>
-  <label className="form-check-label" htmlFor="jambon">jambon</label>
-</div>
-<div className="form-check form-check-inline">
-  <input className="form-check-input" type="checkbox" id="champignon" value="champignons" onClick={(e) => handleTest(e.target.value)}/>
-  <label className="form-check-label" htmlFor="champignon">Champignons</label>
-</div>
-<div className="form-check form-check-inline">
-  <input className="form-check-input" type="checkbox" id="lardons" value="lardons" onClick={(e) => handleTest(e.target.value)}/>
-  <label className="form-check-label" htmlFor="lardons">Lardons</label>
-</div>
-<div className="form-check form-check-inline">
-  <input className="form-check-input" type="checkbox" id="inlineCheckbox6" value="option3" disabled onClick={(e) => handleTest(e.target.value)}/>
-  <label className="form-check-label" htmlFor="inlineCheckbox3">3 (disabled)</label>
-</div>
-<div className="form-check form-check-inline">
-  <input className="form-check-input" type="checkbox" id="inlineCheckbox6" value="option3" disabled onClick={(e) => handleTest(e.target.value)}/>
-  <label className="form-check-label" htmlFor="inlineCheckbox3">3 (disabled)</label>
-</div>
-<div className="form-check form-check-inline">
-  <input className="form-check-input" type="checkbox" id="inlineCheckbox6" value="option3" disabled onClick={(e) => handleTest(e.target.value)}/>
-  <label className="form-check-label" htmlFor="inlineCheckbox3">3 (disabled)</label>
-</div>
+
+{ingredients ? ingredients.map(ingredient => 
+  <div className="form-check form-check-inline" key={ingredient._id}>
+    <input className="form-check-input" 
+    type="checkbox"  
+    id={ingredient._id} 
+    value={ingredient.name} 
+    onClick={(e) => handleSelectIngredient(e.target.value)}
+    />
+    <label className="form-check-label" htmlFor={ingredient._id}>{ingredient.name.substr(0,1).toUpperCase() + ingredient.name.substr(1)}</label>
+  </div>
+) : null}
+
+
+
+
 
   {/* <div className="form-group">
     <label htmlFor="exampleFormControlFile1">Example file input</label>

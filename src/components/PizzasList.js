@@ -9,7 +9,7 @@ import { useHistory } from 'react-router-dom';
 
 
 export default function PizzasList(props) {
-    const {user, pizzas, setPizzas, token} = useContext(PizzasContext);
+    const {user, pizzas, setPizzas, token, setIngredients} = useContext(PizzasContext);
     const [loader, showLoader, hideLoader] = useFullPageLoader();
     const [totalItems, setTotalItems] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
@@ -38,10 +38,13 @@ useEffect(() => {
     const fetchData = async () => {
         showLoader();
         try {
-            const response = await PizzaFinder.get("/pizzas")
+            const fetchPizza = await PizzaFinder.get("/pizzas")
+            const fetchIngredients = await PizzaFinder.get("/ingredients")
+
             //console.log(response.data.Pizza)
+            setPizzas(fetchPizza.data.Pizza);
+            setIngredients(fetchIngredients.data.Ingredient);
             hideLoader();
-            setPizzas(response.data.Pizza);
         }catch(err) {
             console.log(err)
         }
