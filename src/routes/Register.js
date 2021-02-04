@@ -10,7 +10,7 @@ const Register = () => {
     const [error, setError] = useState("");
     const [errorDetails, setErrorDetails] = useState("");
     const [errCode, setErrCode] = useState("");
-    const {message, setMessage} = useContext(PizzasContext);
+    const {setMessage} = useContext(PizzasContext);
     
 
     

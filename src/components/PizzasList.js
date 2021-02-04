@@ -5,45 +5,82 @@ import Header from './DataTable/Header'
 import Search from './DataTable/Search'
 import Pagination from './DataTable/Pagination'
 import useFullPageLoader from './hooks/useFullPageLoader'
+import { useHistory } from 'react-router-dom';
 
 
 export default function PizzasList(props) {
-    const {pizzas, setPizzas} = useContext(PizzasContext);
+    const {user, pizzas, setPizzas, token} = useContext(PizzasContext);
     const [loader, showLoader, hideLoader] = useFullPageLoader();
     const [totalItems, setTotalItems] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState("");
     const [sorting, setSorting] = useState({field:"", order:""});
-    
-    const ITEMS_PER_PAGE = 3;
-
-
-    const headers = [
+    const [headers, setHeaders] = useState([
         {name: "Nom", field: "name", sortable:true},
         {name: "Base", field: "base", sortable:true},
         {name: "Ingrédients", field: "ingredients", sortable:true},
         {name: "€", field: "price", sortable:true}
-    ];
+        ])
+    let history = useHistory();
+    const ITEMS_PER_PAGE = 10;
 
 
-
+    
     useEffect(() => {
-
-        const fetchData = async () => {
-            showLoader();
-            try {
-                const response = await PizzaFinder.get("/pizzas")
-                 //console.log(response.data.Pizza)
-                 hideLoader();
-                setPizzas(response.data.Pizza);
-            }catch(err) {
-                console.log(err)
-            }
+    
+    if(user && user.is_admin === true) {
+        setHeaders([...headers, {name: "actions", field: "actions"}])
+    }
+    // eslint-disable-next-line
+}, [user])
+useEffect(() => {
+    
+    const fetchData = async () => {
+        showLoader();
+        try {
+            const response = await PizzaFinder.get("/pizzas")
+            //console.log(response.data.Pizza)
+            hideLoader();
+            setPizzas(response.data.Pizza);
+        }catch(err) {
+            console.log(err)
         }
-
-        fetchData()
+    }
+    
+    fetchData()
+    // eslint-disable-next-line
     }, [setPizzas])
 
+
+    const handleDelete =  async (e, id) => {
+
+    console.log(id)
+        e.stopPropagation();
+        try {
+            const response = await PizzaFinder.delete(`/pizzas/${id}`, 
+            {headers : {
+                Authorization: `Bearer ${token}`
+            }});
+            setPizzas(pizzas.filter(pizza => {
+                return pizza._id !== id
+            }))
+
+            
+            console.log(response);
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    const handleUpdate = (e, id) => {
+        e.stopPropagation();
+        history.push(`/pizzas/${id}/update`)
+    }
+
+
+    const handlePizzaSelect = (id) => {
+        history.push(`/pizzas/${id}`)
+    }
 
     const pizzaData = useMemo(() => {
         let computedPizzas = pizzas;
@@ -80,34 +117,7 @@ export default function PizzasList(props) {
 
     return (
         <div>
-            {/* <table className="table table-hover">
-                <thead className="bg-primary text-white">
-                    <tr>
-                        <th scope="col">Nom</th>
-                        <th scope="col">Base</th>
-                        <th scope="col">Ingrédients</th>
-                        <th scope="col">Prix</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    
-                        {pizzas && pizzas.map(pizza => {
-                            return (
-                            <tr key={pizza._id}>
-                            
-                                <td>{pizza.name}</td>
-                                <td>{pizza.base}</td>
-                                <td>{pizza.ingredients.join(', ')}</td>
-                                <td>{pizza.price} €</td>
-
-                            </tr>
-                            )
-                        })}
-
-                    
-                    
-                </tbody>
-            </table> */}
+           
             <div className="row w-100">
                 <div className="col mb-3 col-12 text-center">
                     <div className="row">
@@ -140,12 +150,17 @@ export default function PizzasList(props) {
                     
                         {pizzaData && pizzaData.map(pizza => {
                             return (
-                            <tr key={pizza._id}>
+                            <tr onClick={() => handlePizzaSelect(pizza._id)} key={pizza._id}>
                             
                                 <td>{pizza.name}</td>
                                 <td>{pizza.base}</td>
                                 <td>{pizza.ingredients}</td>
                                 <td>{pizza.price}</td>
+                                {user ? (user.is_admin ? <td className='row'>
+                                    <button className="btn btn-warning" onClick={(e) => handleUpdate(e, pizza._id)}>Màj</button>
+                                    
+                                    <button className="btn btn-danger" onClick={(e) => handleDelete(e, pizza._id)}>Sup</button>
+                                </td> : null) : null}
 
                             </tr>
                             )

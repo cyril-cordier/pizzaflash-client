@@ -2,14 +2,15 @@ import React, {useContext, useState} from 'react'
 import { useHistory, Link } from 'react-router-dom';
 import PizzaFinder from '../apis/PizzaFinder'
 import {PizzasContext} from '../context/PizzasContext'
+import jwtDecode from 'jwt-decode';
 
 const Login = () => {
     let history = useHistory();
     const {message, setMessage, setToken, setUser} = useContext(PizzasContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
-    const [errorDetails, setErrorDetails] = useState("");
+    const [setError] = useState("");
+    //const [errorDetails, setErrorDetails] = useState("");
     const [errCode, setErrCode] = useState("");
     
     
@@ -28,8 +29,8 @@ const Login = () => {
             if(result.data.pizzatoken){
                 localStorage.setItem('pizzatoken',result.data.pizzatoken);
                 setToken(result.data.pizzatoken)
-
-                setUser(true)
+                //console.log(jwtDecode(result.data.pizzatoken))
+                setUser(jwtDecode(result.data.pizzatoken))
 
                 setMessage('Vous êtes connecté')
                 history.push('/')

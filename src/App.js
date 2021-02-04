@@ -6,6 +6,10 @@ import Login from './routes/Login';
 import Register from './routes/Register';
 import UpdatePage from './routes/UpdatePage';
 import PizzaDetailPage from './routes/PizzaDetailPage';
+import AddPizza from './routes/AddPizza';
+import ProtectedRoute from './routes/ProtectedRoute';
+import IngredientsList from './components/IngredientsList';
+import Header from './components/Header';
 
 function App() {
   return (
@@ -13,9 +17,12 @@ function App() {
 
       <div className='container'>
         <Router>
+          <Header />
         
           <Switch>
             <Route exact path='/' component={Home}/>
+            <ProtectedRoute exact path='/ingredients' component={IngredientsList}/>
+            <ProtectedRoute exact path='/addpizza' component={AddPizza}/>
             <Route exact path='/login' component={Login}/>
             <Route exact path='/register' component={Register}/>
             <Route exact path='/pizzas/:id' component={PizzaDetailPage}/>
