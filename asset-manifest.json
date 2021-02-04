@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/pizzaflash-client/static/css/main.0ddb21de.chunk.css",
+    "main.js": "/pizzaflash-client/static/js/main.9394fc51.chunk.js",
+    "main.js.map": "/pizzaflash-client/static/js/main.9394fc51.chunk.js.map",
+    "runtime-main.js": "/pizzaflash-client/static/js/runtime-main.f8ba8e53.js",
+    "runtime-main.js.map": "/pizzaflash-client/static/js/runtime-main.f8ba8e53.js.map",
+    "static/js/2.5148cca6.chunk.js": "/pizzaflash-client/static/js/2.5148cca6.chunk.js",
+    "static/js/2.5148cca6.chunk.js.map": "/pizzaflash-client/static/js/2.5148cca6.chunk.js.map",
+    "static/js/3.024f6904.chunk.js": "/pizzaflash-client/static/js/3.024f6904.chunk.js",
+    "static/js/3.024f6904.chunk.js.map": "/pizzaflash-client/static/js/3.024f6904.chunk.js.map",
+    "index.html": "/pizzaflash-client/index.html",
+    "static/css/main.0ddb21de.chunk.css.map": "/pizzaflash-client/static/css/main.0ddb21de.chunk.css.map",
+    "static/js/2.5148cca6.chunk.js.LICENSE.txt": "/pizzaflash-client/static/js/2.5148cca6.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.f8ba8e53.js",
+    "static/js/2.5148cca6.chunk.js",
+    "static/css/main.0ddb21de.chunk.css",
+    "static/js/main.9394fc51.chunk.js"
+  ]
+}
