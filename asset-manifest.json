@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/pizzaflash-client/static/css/main.0ddb21de.chunk.css",
-    "main.js": "/pizzaflash-client/static/js/main.9394fc51.chunk.js",
-    "main.js.map": "/pizzaflash-client/static/js/main.9394fc51.chunk.js.map",
+    "main.js": "/pizzaflash-client/static/js/main.09914e3e.chunk.js",
+    "main.js.map": "/pizzaflash-client/static/js/main.09914e3e.chunk.js.map",
     "runtime-main.js": "/pizzaflash-client/static/js/runtime-main.f8ba8e53.js",
     "runtime-main.js.map": "/pizzaflash-client/static/js/runtime-main.f8ba8e53.js.map",
     "static/js/2.5148cca6.chunk.js": "/pizzaflash-client/static/js/2.5148cca6.chunk.js",
@@ -11,12 +11,13 @@
     "static/js/3.024f6904.chunk.js.map": "/pizzaflash-client/static/js/3.024f6904.chunk.js.map",
     "index.html": "/pizzaflash-client/index.html",
     "static/css/main.0ddb21de.chunk.css.map": "/pizzaflash-client/static/css/main.0ddb21de.chunk.css.map",
-    "static/js/2.5148cca6.chunk.js.LICENSE.txt": "/pizzaflash-client/static/js/2.5148cca6.chunk.js.LICENSE.txt"
+    "static/js/2.5148cca6.chunk.js.LICENSE.txt": "/pizzaflash-client/static/js/2.5148cca6.chunk.js.LICENSE.txt",
+    "static/media/loading.6f3798d6.gif": "/pizzaflash-client/static/media/loading.6f3798d6.gif"
   },
   "entrypoints": [
     "static/js/runtime-main.f8ba8e53.js",
     "static/js/2.5148cca6.chunk.js",
     "static/css/main.0ddb21de.chunk.css",
-    "static/js/main.9394fc51.chunk.js"
+    "static/js/main.09914e3e.chunk.js"
   ]
 }
