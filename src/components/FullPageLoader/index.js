@@ -1,10 +1,11 @@
 import React from 'react'
+import loading from '../../assets/images/loading.gif'
 
 
 const FullPageLoader = () => {
     return (
         <div className="fp-container">
-            <img src="https://res.cloudinary.com/dcp7bq2a1/image/upload/v1612708699/pizzaflash/loading_qiedvy.gif" alt="chargement" className="fp-loader"/>
+            <img src={loading} alt="chargement" className="fp-loader"/>
         </div>
     )
 }
